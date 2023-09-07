@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox 
+from tkinter import messagebox
 #Python image Library
 from PIL import ImageTk, Image
 import sqlite3
@@ -9,12 +9,12 @@ from datetime import datetime
 class Tienda():
     db_name='tienda_diaz.db'
     def __init__(self, ventana_producto):
-        menubar=Menu(ventana_producto)   
+        menubar=Menu(ventana_producto)
         ventana_producto.title("TIENDA DIAZ")
         ventana_producto.geometry("770x700")
         ventana_producto.resizable(0,0)
         ventana_producto.config(bd=10,menu=menubar)
-        
+
         "---------------------Menu---------------------------"
         Productos=Menu(menubar,tearoff=0)
         Ventas=Menu(menubar,tearoff=0)
@@ -25,22 +25,22 @@ class Tienda():
         #menubar.add_cascade(label="Reportes",menu=Reportes)
         menubar.add_cascade(label="Ayuda",menu=Informacion)
         #Iconos
-        self.img_registrar=PhotoImage(file="./PROYECTO_TIENDA/img/registrar.png")
-        self.img_buscar=PhotoImage(file="./PROYECTO_TIENDA/img/buscar.png")
-        self.img_ventas=PhotoImage(file="./PROYECTO_TIENDA/img/ventas.png")
-        self.img_nueva_venta=PhotoImage(file="./PROYECTO_TIENDA/img/nueva_venta.png")
-        self.img_cliente=PhotoImage(file="./PROYECTO_TIENDA/img/cliente.png")
-        self.img_codigo=PhotoImage(file="./PROYECTO_TIENDA/img/codigo.png")
-        self.img_informacion=PhotoImage(file="./PROYECTO_TIENDA/img/informacion.png")
+        self.img_registrar=PhotoImage(file="img/registrar.png")
+        self.img_buscar=PhotoImage(file="img/buscar.png")
+        self.img_ventas=PhotoImage(file="img/ventas.png")
+        self.img_nueva_venta=PhotoImage(file="img/nueva_venta.png")
+        self.img_cliente=PhotoImage(file="img/cliente.png")
+        self.img_codigo=PhotoImage(file="img/codigo.png")
+        self.img_informacion=PhotoImage(file="img/informacion.png")
         #Acciones de menu
         self.boton_registrar=Productos.add_command(label="Registrar",command= self.widgets_crud,image=self.img_registrar,compound=LEFT)
         self.boton_buscar=Productos.add_command(label="Buscar",command=self.widgets_buscador,image=self.img_buscar,compound=LEFT)
-        self.boton_nueva_venta=Ventas.add_command(label="Nueva Venta",command=self.widgets_nueva_venta,image=self.img_nueva_venta,compound=LEFT)        
-        self.boton_ventas=Ventas.add_command(label="Ventas",command=self.widgets_ventas,image=self.img_ventas,compound=LEFT)        
-        self.boton_cliente=Ventas.add_command(label="Clientes",command=self.widgets_cliente,image=self.img_cliente,compound=LEFT)        
+        self.boton_nueva_venta=Ventas.add_command(label="Nueva Venta",command=self.widgets_nueva_venta,image=self.img_nueva_venta,compound=LEFT)
+        self.boton_ventas=Ventas.add_command(label="Ventas",command=self.widgets_ventas,image=self.img_ventas,compound=LEFT)
+        self.boton_cliente=Ventas.add_command(label="Clientes",command=self.widgets_cliente,image=self.img_cliente,compound=LEFT)
         self.boton_informacion=Informacion.add_command(label="Codigo Producto",command=self.widgets_codigos,image=self.img_codigo,compound=LEFT)
         self.boton_informacion=Informacion.add_command(label="Informacion del sistema",command=self.widgets_informacion,image=self.img_informacion,compound=LEFT)
-        
+
         "---------------------Widgets---------------------------"
         #widgets crud
         self.frame_logo_productos = LabelFrame(ventana_producto)
@@ -73,20 +73,20 @@ class Tienda():
         #Pantalla inicial
         self.widgets_crud()
 
-    "--------------- WIDGETS--------------------"  
+    "--------------- WIDGETS--------------------"
     def widgets_crud(self):
         "--------------- Logos tienda --------------------"
         self.frame_logo_productos.config(bd=0)
         self.frame_logo_productos.grid(row=0,column=0,padx=5,pady=5)
 
-        #Logo 
-        imagen=Image.open("./PROYECTO_TIENDA/img/logo-tienda.png")
+        #Logo
+        imagen=Image.open("img/logo-tienda.png")
         nueva_imagen=imagen.resize((320,150))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.frame_logo_productos, image= render)
         label_imagen.image=render
         label_imagen.grid(row=0, column=0)
-        
+
         "--------------- Frame marco registro --------------------"
         self.frame_registro.config(bd=2)
         self.frame_registro.grid(row=1,column=0,padx=5,pady=5)
@@ -96,11 +96,11 @@ class Tienda():
         self.codigo=Entry(self.frame_registro,width=25)
         self.codigo.focus()
         self.codigo.grid(row=0, column=1, padx=5, pady=8)
-        
+
         label_nombre=Label(self.frame_registro,text="Nombre del producto: ",font=("Comic Sans", 10,"bold")).grid(row=1,column=0,sticky='s',padx=5,pady=8)
         self.nombre=Entry(self.frame_registro,width=25)
         self.nombre.grid(row=1, column=1, padx=5, pady=8)
-        
+
         label_categoria=Label(self.frame_registro,text="Categoria: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=0,sticky='s',padx=5,pady=9)
         self.combo_categoria=ttk.Combobox(self.frame_registro,values=["Componentes","Perifericos"], width=22,state="readonly")
         self.combo_categoria.current(0)
@@ -117,7 +117,7 @@ class Tienda():
         label_descripcion=Label(self.frame_registro,text="Descripcion: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=2,sticky='s',padx=10,pady=8)
         self.descripcion=Entry(self.frame_registro,width=25)
         self.descripcion.grid(row=2, column=3, padx=10, pady=8)
-        
+
         "--------------- Frame botones --------------------"
         self.frame_botones_registro.config(bd=0)
         self.frame_botones_registro.grid(row=2,column=0,padx=5,pady=5)
@@ -126,7 +126,7 @@ class Tienda():
         boton_registrar=Button(self.frame_botones_registro,text="REGISTRAR",command=self.Agregar_producto,height=2,width=12,bg="green",fg="white",font=("Comic Sans", 10,"bold")).grid(row=0, column=1, padx=10, pady=10)
         boton_editar=Button(self.frame_botones_registro,text="EDITAR",command=self.Editar_producto ,height=2,width=12,bg="gray",fg="white",font=("Comic Sans", 10,"bold")).grid(row=0, column=2, padx=10, pady=10)
         boton_eliminar=Button(self.frame_botones_registro,text="ELIMINAR",command=self.Eliminar_producto,height=2,width=12,bg="red",fg="white",font=("Comic Sans", 10,"bold")).grid(row=0, column=3, padx=10, pady=10)
-        
+
         "--------------- Tabla --------------------"
         self.frame_tabla_crud.config(bd=2)
         self.frame_tabla_crud.grid(row=3,column=0,padx=5,pady=5)
@@ -134,25 +134,25 @@ class Tienda():
         self.tree=ttk.Treeview(self.frame_tabla_crud,height=11, columns=("columna1","columna2","columna3","columna4","columna5"))
         self.tree.heading("#0",text='Codigo', anchor=CENTER)
         self.tree.column("#0", width=90, minwidth=75, stretch=NO)
-        
+
         self.tree.heading("columna1",text='Nombre', anchor=CENTER)
         self.tree.column("columna1", width=150, minwidth=75, stretch=NO)
-        
+
         self.tree.heading("columna2",text='Categoria', anchor=CENTER)
         self.tree.column("columna2", width=150, minwidth=75, stretch=NO)
-                
+
         self.tree.heading("columna3",text='Cantidad', anchor=CENTER)
         self.tree.column("columna3", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree.heading("columna4",text='Precio', anchor=CENTER)
         self.tree.column("columna4", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree.heading("columna5",text='Descripcion', anchor=CENTER)
-        
+
         self.tree.grid(row=0,column=0,sticky=E)
-        
+
         self.Obtener_productos()
-        
+
         #REMOVER OTROS WIDGETS
         self.widgets_buscador_remove()
         self.widgets_informacion_remove()
@@ -162,11 +162,11 @@ class Tienda():
         self.widgets_nueva_venta_remove()
 
     def widgets_buscador(self):
-        
+
         "--------------- Frame marco buscar --------------------"
         self.frame_buscar_producto.config(bd=2)
         self.frame_buscar_producto.grid(row=1,column=0,padx=5,pady=5)
-        
+
         "--------------- Formulario Buscar--------------------"
         self.label_buscar=Label(self.frame_buscar_producto,text="Buscar Por: ",font=("Comic Sans", 10,"bold")).grid(row=0,column=0,sticky='s',padx=5,pady=5)
         self.combo_buscar=ttk.Combobox(self.frame_buscar_producto,values=["Codigo","Nombre"], width=22,state="readonly")
@@ -192,21 +192,21 @@ class Tienda():
         self.tree_buscar=ttk.Treeview(self.frame_tabla_buscador,height=11, columns=("columna1","columna2","columna3","columna4","columna5"))
         self.tree_buscar.heading("#0",text='Codigo', anchor=CENTER)
         self.tree_buscar.column("#0", width=90, minwidth=75, stretch=NO)
-        
+
         self.tree_buscar.heading("columna1",text='Nombre', anchor=CENTER)
         self.tree_buscar.column("columna1", width=150, minwidth=75, stretch=NO)
-        
+
         self.tree_buscar.heading("columna2",text='Categoria', anchor=CENTER)
         self.tree_buscar.column("columna2", width=150, minwidth=75, stretch=NO)
-                
+
         self.tree_buscar.heading("columna3",text='Cantidad', anchor=CENTER)
         self.tree_buscar.column("columna3", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree_buscar.heading("columna4",text='Precio', anchor=CENTER)
         self.tree_buscar.column("columna4", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree_buscar.heading("columna5",text='Descripcion', anchor=CENTER)
-        
+
         self.tree_buscar.grid(row=0,column=0,sticky=E)
         self.Obtener_productos()
         self.tree_buscar.delete(*self.tree_buscar.get_children())
@@ -220,11 +220,11 @@ class Tienda():
         self.widgets_nueva_venta_remove()
 
     def widgets_cliente(self):
-        
+
         "--------------- Frame marco buscar --------------------"
         self.frame_nuevo_cliente.config(bd=2)
         self.frame_nuevo_cliente.grid(row=1,column=0,padx=5,pady=5)
-        
+
         "--------------- Registrar cliente --------------------"
         self.label_dni=Label(self.frame_nuevo_cliente,text="DNI: ",font=("Comic Sans", 10,"bold")).grid(row=0,column=0,sticky='s',padx=5,pady=5)
         self.dni=Entry(self.frame_nuevo_cliente,width=25)
@@ -260,7 +260,7 @@ class Tienda():
 
         self.boton_eliminar=Button(self.frame_nuevo_cliente,text="ELIMINAR",command=self.Eliminar_cliente,height=1,width=15,bg="red",fg="white",font=("Comic Sans", 10,"bold"))
         self.boton_eliminar.grid(row=2,column=4,padx=10,pady=5)
-        
+
         "--------------- Tabla --------------------"
         self.frame_tabla_clientes.config(bd=2)
         self.frame_tabla_clientes.grid(row=2,column=0,padx=5,pady=5)
@@ -268,19 +268,19 @@ class Tienda():
         self.tree_cliente=ttk.Treeview(self.frame_tabla_clientes,height=11, columns=("columna1","columna2","columna3","columna4","columna5"))
         self.tree_cliente.heading("#0",text='DNI', anchor=CENTER)
         self.tree_cliente.column("#0", width=90, minwidth=75, stretch=NO)
-        
+
         self.tree_cliente.heading("columna1",text='Nombre', anchor=CENTER)
         self.tree_cliente.column("columna1", width=150, minwidth=75, stretch=NO)
-        
+
         self.tree_cliente.heading("columna2",text='Apellidos', anchor=CENTER)
         self.tree_cliente.column("columna2", width=150, minwidth=75, stretch=NO)
-                
+
         self.tree_cliente.heading("columna3",text='Telefono', anchor=CENTER)
         self.tree_cliente.column("columna3", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree_cliente.heading("columna4",text='E-mail', anchor=CENTER)
         self.tree_cliente.column("columna4", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree_cliente.heading("columna5",text='Direccion', anchor=CENTER)
 
         self.tree_cliente.grid(row=0,column=0,sticky=E)
@@ -307,7 +307,7 @@ class Tienda():
     def widgets_codigos(self):
         self.frame_codigo.config(bd=0)
         self.frame_codigo.grid(row=0,column=0)
-        imagen=Image.open("./PROYECTO_TIENDA/img/codigos.png")
+        imagen=Image.open("img/codigos.png")
         nueva_imagen=imagen.resize((750,650))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.frame_codigo, image= render)
@@ -330,8 +330,8 @@ class Tienda():
         self.Label_titulo.grid(row=0,column=0)
 
         "--------------- Logos imagenes--------------------"
-        #Logo 
-        imagen=Image.open("./PROYECTO_TIENDA/img/app_logo_2.png")
+        #Logo
+        imagen=Image.open("img/app_logo_2.png")
         nueva_imagen=imagen.resize((170,170))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.Label_informacion, image= render)
@@ -353,7 +353,7 @@ class Tienda():
 
         self.Label_titulo = Label(self.Label_informacion,text="Creado por Emiliano Diaz - 2023",fg="black",font=("Comic Sans",12,"bold"))
         self.Label_titulo.grid(row=6,column=0,pady=85)
-        
+
         #Remove
         self.widgets_buscador_remove()
         self.widgets_crud_remove()
@@ -403,16 +403,16 @@ class Tienda():
         self.tree_nueva_venta=ttk.Treeview(self.frame_tabla_nueva_venta,height=11, columns=("columna1","columna2","columna3","columna4","columna5"))
         self.tree_nueva_venta.heading("#0",text='Codigo', anchor=CENTER)
         self.tree_nueva_venta.column("#0", width=90, minwidth=75, stretch=NO)
-        
+
         self.tree_nueva_venta.heading("columna1",text='Producto', anchor=CENTER)
         self.tree_nueva_venta.column("columna1", width=150, minwidth=75, stretch=NO)
-        
+
         self.tree_nueva_venta.heading("columna2",text='Descripcion', anchor=CENTER)
         self.tree_nueva_venta.column("columna2", width=150, minwidth=75, stretch=NO)
-                
+
         self.tree_nueva_venta.heading("columna3",text='Precio', anchor=CENTER)
         self.tree_nueva_venta.column("columna3", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree_nueva_venta.heading("columna4",text='Cantidad', anchor=CENTER)
         self.tree_nueva_venta.column("columna4", width=70, minwidth=60, stretch=NO)
 
@@ -425,7 +425,7 @@ class Tienda():
         self.frame_finalizar_venta.grid(row=4,column=0,padx=5,pady=5,sticky=E)
 
         self.boton_finalizar_venta=Button(self.frame_finalizar_venta,text="Finalizar venta",command=self.Finalizar_venta,height=2,width=15,bg="black",fg="white",font=("Comic Sans", 12,"bold"))
-        self.boton_finalizar_venta.grid(row=0,column=0,padx=5,pady=5)       
+        self.boton_finalizar_venta.grid(row=0,column=0,padx=5,pady=5)
 
         label_venta_total=Label(self.frame_finalizar_venta,text="Venta total ($): ",font=("Comic Sans", 12,"bold")).grid(row=0,column=1,padx=5,pady=5)
         self.venta_total=Label(self.frame_finalizar_venta,text="0.00",font=("Comic Sans", 12,"bold"),height=1,width=10,bg="blue",fg="white")
@@ -436,13 +436,13 @@ class Tienda():
         self.widgets_buscador_remove()
         self.widgets_informacion_remove()
         self.widgets_cliente_remove()
-        self.widgets_ventas_remove()  
-          
+        self.widgets_ventas_remove()
+
     def widgets_ventas(self):
         "--------------- Frame marco ventas --------------------"
         self.frame_buscar_ventas.config(bd=2)
         self.frame_buscar_ventas.grid(row=1,column=0,padx=5,pady=5)
-        
+
         "--------------- Formulario Buscar ventas--------------------"
         self.label_buscar_venta=Label(self.frame_buscar_ventas,text="Buscar Por: ",font=("Comic Sans", 10,"bold")).grid(row=0,column=0,sticky='s',padx=5,pady=5)
         self.combo_buscar_venta=ttk.Combobox(self.frame_buscar_ventas,values=["DNI","Fecha"], width=22,state="readonly")
@@ -468,19 +468,19 @@ class Tienda():
         self.tree_buscar_ventas=ttk.Treeview(self.frame_tabla_ventas,height=11, columns=("columna1","columna2","columna3","columna4","columna5"))
         self.tree_buscar_ventas.heading("#0",text='Fecha', anchor=CENTER)
         self.tree_buscar_ventas.column("#0", width=150, minwidth=75, stretch=NO)
-        
+
         self.tree_buscar_ventas.heading("columna1",text='DNI', anchor=CENTER)
         self.tree_buscar_ventas.column("columna1", width=90, minwidth=60, stretch=NO)
-        
+
         self.tree_buscar_ventas.heading("columna2",text='Nombres', anchor=CENTER)
         self.tree_buscar_ventas.column("columna2", width=90, minwidth=60, stretch=NO)
-                
+
         self.tree_buscar_ventas.heading("columna3",text='Apellidos', anchor=CENTER)
         self.tree_buscar_ventas.column("columna3", width=90, minwidth=60, stretch=NO)
-        
+
         self.tree_buscar_ventas.heading("columna4",text='Medio de pago', anchor=CENTER)
         self.tree_buscar_ventas.column("columna4", width=110, minwidth=75, stretch=NO)
-        
+
         self.tree_buscar_ventas.heading("columna5",text='Venta total', anchor=CENTER)
 
         self.tree_buscar_ventas.grid(row=0,column=0,sticky=E)
@@ -492,7 +492,7 @@ class Tienda():
         self.widgets_cliente_remove()
         self.widgets_nueva_venta_remove()
 
-    "--------------- WIDGETS REMOVE --------------------" 
+    "--------------- WIDGETS REMOVE --------------------"
     def widgets_crud_remove(self):
         self.frame_registro.grid_remove()
         self.frame_botones_registro.grid_remove()
@@ -524,7 +524,7 @@ class Tienda():
         self.frame_nueva_venta.grid_remove()
         self.frame_tabla_nueva_venta.grid_remove()
         self.frame_finalizar_venta.grid_remove()
-    "--------------- CRUD --------------------"               
+    "--------------- CRUD --------------------"
     def Obtener_productos(self):
         records=self.tree.get_children()
         for element in records:
@@ -533,7 +533,7 @@ class Tienda():
         db_rows=self.Ejecutar_consulta(query)
         for row in db_rows:
             self.tree.insert("",0, text=row[1],values=(row[2],row[3],row[4],row[5],row[6]))
-            
+
     def Agregar_producto(self):
         if self.Validar_formulario_completo() and self.Validar_registrar():
             query='INSERT INTO Productos VALUES(NULL, ?, ?, ?, ?, ?, ?)'
@@ -543,12 +543,12 @@ class Tienda():
             print('REGISTRADO')
             self.Limpiar_formulario()
         self.Obtener_productos()
-    
+
     def Eliminar_producto(self):
         try:
             self.tree.item(self.tree.selection())['text'][0]
         except IndexError as e:
-            messagebox.showerror("ERROR","Porfavor selecciona un elemento") 
+            messagebox.showerror("ERROR","Porfavor selecciona un elemento")
             return
         dato=self.tree.item(self.tree.selection())['text']
         nombre=self.tree.item(self.tree.selection())['values'][0]
@@ -560,12 +560,12 @@ class Tienda():
             messagebox.showinfo('EXITO',f'Producto eliminado: {nombre}')
         else:
             messagebox.showerror('ERROR',f'Error al eliminar el producto: {nombre}')
-     
+
     def Editar_producto(self):
         try:
             self.tree.item(self.tree.selection())['text'][0]
         except IndexError as e:
-            messagebox.showerror("ERROR","Porfavor selecciona un elemento") 
+            messagebox.showerror("ERROR","Porfavor selecciona un elemento")
             return
         codigo=self.tree.item(self.tree.selection())['text']
         nombre=self.tree.item(self.tree.selection())['values'][0]
@@ -573,20 +573,20 @@ class Tienda():
         cantidad=self.tree.item(self.tree.selection())['values'][2]
         precio=self.tree.item(self.tree.selection())['values'][3]
         descripcion=self.tree.item(self.tree.selection())['values'][4]
-        
+
         self.Ventana_editar = Toplevel()
         self.Ventana_editar.title('EDITAR PRODUCTO')
         self.Ventana_editar.resizable(0,0)
-        
+
         #Valores ventana editar
         label_codigo=Label(self.Ventana_editar,text="Codigo del producto: ",font=("Comic Sans", 10,"bold")).grid(row=0,column=0,sticky='s',padx=5,pady=8)
         nuevo_codigo=Entry(self.Ventana_editar,textvariable=StringVar(self.Ventana_editar,value=codigo),width=25)
         nuevo_codigo.grid(row=0, column=1, padx=5, pady=8)
-        
+
         label_nombre=Label(self.Ventana_editar,text="Nombre del producto: ",font=("Comic Sans", 10,"bold")).grid(row=1,column=0,sticky='s',padx=5,pady=8)
         nuevo_nombre=Entry(self.Ventana_editar,textvariable=StringVar(self.Ventana_editar,value=nombre),width=25)
         nuevo_nombre.grid(row=1, column=1, padx=5, pady=8)
-    
+
         label_categoria=Label(self.Ventana_editar,text="Categoria: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=0,sticky='s',padx=5,pady=9)
         nuevo_combo_categoria=ttk.Combobox(self.Ventana_editar,values=["Componentes","Perifericos"], width=22,state="readonly")
         nuevo_combo_categoria.set(categoria)
@@ -599,16 +599,16 @@ class Tienda():
         label_precio=Label(self.Ventana_editar,text="Precio ($): ",font=("Comic Sans", 10,"bold")).grid(row=1,column=2,sticky='s',padx=5,pady=8)
         nuevo_precio=Entry(self.Ventana_editar,textvariable=StringVar(self.Ventana_editar,value=precio),width=25)
         nuevo_precio.grid(row=1, column=3, padx=5, pady=8)
-        
+
         label_descripcion=Label(self.Ventana_editar,text="Descripcion: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=2,sticky='s',padx=10,pady=8)
         nueva_descripcion=Entry(self.Ventana_editar,textvariable=StringVar(self.Ventana_editar,value=descripcion),width=25)
         nueva_descripcion.grid(row=2, column=3, padx=10, pady=8)
 
         boton_actualizar=Button(self.Ventana_editar,text="ACTUALIZAR",command= lambda: self.Actualizar(nuevo_codigo.get(),nuevo_nombre.get(),nuevo_combo_categoria.get(),nueva_cantidad.get(),nuevo_precio.get(),nueva_descripcion.get(),codigo,nombre),height=2,width=20,bg="black",fg="white",font=("Comic Sans", 10,"bold"))
         boton_actualizar.grid(row=3, column=1,columnspan=2, padx=10, pady=15)
-        
-        self.Ventana_editar.mainloop()      
-        
+
+        self.Ventana_editar.mainloop()
+
     def Actualizar(self,nuevo_codigo,nuevo_nombre,nuevo_combo_categoria,nueva_cantidad,nuevo_precio,nueva_descripcion,codigo,nombre):
         query='UPDATE Productos SET Codigo = ?, Nombre = ?, Categoria = ?, Cantidad =?, Precio=?, Descripcion =? WHERE Codigo = ? AND Nombre =?'
         parameters=(nuevo_codigo,nuevo_nombre,nuevo_combo_categoria,nueva_cantidad,nuevo_precio,nueva_descripcion,codigo,nombre)
@@ -624,7 +624,7 @@ class Tienda():
             for element in records:
                 self.tree_buscar.delete(element)
             if (self.combo_buscar.get()=='Codigo'):
-                query=("SELECT * FROM Productos WHERE Codigo LIKE ? ") 
+                query=("SELECT * FROM Productos WHERE Codigo LIKE ? ")
                 parameters=(self.codigo_nombre.get()+"%")
                 db_rows=self.Ejecutar_consulta(query,(parameters,))
                 for row in db_rows:
@@ -646,20 +646,20 @@ class Tienda():
             cursor=conexion.cursor()
             result=cursor.execute(query,parameters)
             conexion.commit()
-        return result   
-          
+        return result
+
     def Validar_formulario_completo(self):
         if len(self.codigo.get()) !=0 and len(self.nombre.get()) !=0 and len(self.combo_categoria.get()) !=0 and len(self.cantidad.get()) !=0 and len(self.precio.get()) !=0 and len(self.descripcion.get()) !=0:
             return True
         else:
-             messagebox.showerror("ERROR", "Complete todos los campos del formulario") 
-    
+             messagebox.showerror("ERROR", "Complete todos los campos del formulario")
+
     def Validar_busqueda(self):
         if len(self.codigo_nombre.get()) !=0:
             return True
         else:
              self.tree.delete(*self.tree.get_children())
-             messagebox.showerror("ERROR", "Complete todos los campos para la busqueda") 
+             messagebox.showerror("ERROR", "Complete todos los campos para la busqueda")
 
     def Limpiar_formulario(self):
         self.codigo.delete(0, END)
@@ -686,7 +686,7 @@ class Tienda():
         db_rows=self.Ejecutar_consulta(query)
         for row in db_rows:
             self.tree_cliente.insert("",0, text=row[0],values=(row[1],row[2],row[3],row[4],row[5]))
-            
+
     def Agregar_cliente(self):
         if self.Validar_formulario_completo_cliente() and self.Validar_registrar_cliente():
             query='INSERT INTO Clientes VALUES(?, ?, ?, ?, ?, ?)'
@@ -701,7 +701,7 @@ class Tienda():
         try:
             self.tree_cliente.item(self.tree_cliente.selection())['text']
         except IndexError as e:
-            messagebox.showerror("ERROR","Porfavor selecciona un elemento") 
+            messagebox.showerror("ERROR","Porfavor selecciona un elemento")
             return
         dato=self.tree_cliente.item(self.tree_cliente.selection())['text']
         nombre=self.tree_cliente.item(self.tree_cliente.selection())['values'][1]
@@ -718,7 +718,7 @@ class Tienda():
         try:
             self.tree_cliente.item(self.tree_cliente.selection())['text']
         except IndexError as e:
-            messagebox.showerror("ERROR","Porfavor selecciona un elemento") 
+            messagebox.showerror("ERROR","Porfavor selecciona un elemento")
             return
         dni=self.tree_cliente.item(self.tree_cliente.selection())['text']
         nombres=self.tree_cliente.item(self.tree_cliente.selection())['values'][0]
@@ -726,20 +726,20 @@ class Tienda():
         telefono=self.tree_cliente.item(self.tree_cliente.selection())['values'][2]
         email=self.tree_cliente.item(self.tree_cliente.selection())['values'][3]
         direccion=self.tree_cliente.item(self.tree_cliente.selection())['values'][4]
-        
+
         self.Ventana_editar_cliente = Toplevel()
         self.Ventana_editar_cliente.title('EDITAR CLIENTE')
         self.Ventana_editar_cliente.resizable(0,0)
-        
+
         #Valores ventana editar
         label_dni=Label(self.Ventana_editar_cliente,text="DNI: ",font=("Comic Sans", 10,"bold")).grid(row=0,column=0,sticky='s',padx=5,pady=8)
         nuevo_dni=Entry(self.Ventana_editar_cliente,textvariable=StringVar(self.Ventana_editar_cliente,value=dni),width=25)
         nuevo_dni.grid(row=0, column=1, padx=5, pady=8)
-        
+
         label_nombres=Label(self.Ventana_editar_cliente,text="Nombres: ",font=("Comic Sans", 10,"bold")).grid(row=1,column=0,sticky='s',padx=5,pady=8)
         nuevo_nombres=Entry(self.Ventana_editar_cliente,textvariable=StringVar(self.Ventana_editar_cliente,value=nombres),width=25)
         nuevo_nombres.grid(row=1, column=1, padx=5, pady=8)
-    
+
         label_apellidos=Label(self.Ventana_editar_cliente,text="Apellidos: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=0,sticky='s',padx=5,pady=9)
         nuevo_apellidos=Entry(self.Ventana_editar_cliente,textvariable=StringVar(self.Ventana_editar_cliente,value=apellidos),width=25)
         nuevo_apellidos.grid(row=2,column=1,padx=5,pady=0)
@@ -751,16 +751,16 @@ class Tienda():
         label_email=Label(self.Ventana_editar_cliente,text="E-mail: ",font=("Comic Sans", 10,"bold")).grid(row=1,column=2,sticky='s',padx=5,pady=8)
         nuevo_email=Entry(self.Ventana_editar_cliente,textvariable=StringVar(self.Ventana_editar_cliente,value=email),width=25)
         nuevo_email.grid(row=1, column=3, padx=5, pady=8)
-        
+
         label_direccion=Label(self.Ventana_editar_cliente,text="Direccion: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=2,sticky='s',padx=10,pady=8)
         nueva_direccion=Entry(self.Ventana_editar_cliente,textvariable=StringVar(self.Ventana_editar_cliente,value=direccion),width=25)
         nueva_direccion.grid(row=2, column=3, padx=10, pady=8)
 
         boton_actualizar_cliente=Button(self.Ventana_editar_cliente,text="ACTUALIZAR",command= lambda: self.Actualizar_cliente(nuevo_dni.get(),nuevo_nombres.get(),nuevo_apellidos.get(),nueva_telefono.get(),nuevo_email.get(),nueva_direccion.get(),dni,nombres),height=2,width=20,bg="black",fg="white",font=("Comic Sans", 10,"bold"))
         boton_actualizar_cliente.grid(row=3, column=1,columnspan=2, padx=10, pady=15)
-        
-        self.Ventana_editar_cliente.mainloop()      
-        
+
+        self.Ventana_editar_cliente.mainloop()
+
     def Actualizar_cliente(self,nuevo_dni,nuevo_nombres,nuevo_apelllidos,nueva_telefono,nuevo_email,nueva_direccion,dni,nombres):
         query='UPDATE Clientes SET DNI = ?, Nombres = ?, Apellidos = ?, Telefono =?, Email=?, Direccion =? WHERE DNI = ? AND Nombres =?'
         parameters=(nuevo_dni,nuevo_nombres,nuevo_apelllidos,nueva_telefono,nuevo_email,nueva_direccion,dni,nombres)
@@ -775,7 +775,7 @@ class Tienda():
             records=self.tree_cliente.get_children()
             for element in records:
                 #self.tree_cliente.delete(element)
-                query=("SELECT * FROM Clientes WHERE DNI LIKE ? ") 
+                query=("SELECT * FROM Clientes WHERE DNI LIKE ? ")
                 parameters=(self.buscar_dni.get()+"%")
                 db_rows=self.Ejecutar_consulta(query,(parameters,))
                 for row in db_rows:
@@ -783,7 +783,7 @@ class Tienda():
                     self.tree_cliente.insert("",0, text=row[0],values=(row[1],row[2],row[3],row[4],row[5]))
                 if(list(self.tree_cliente.get_children())==[]):
                     messagebox.showerror("ERROR","Cliente no encontrado")
-        
+
     "--------------- OTRAS FUNCIONES CLIENTES--------------------"
     def Validar_formulario_completo_cliente(self):
         if len(self.dni.get()) !=0 and len(self.nombres.get()) !=0 and len(self.apellidos.get()) !=0 and len(self.telefono.get()) !=0 and len(self.email.get()) !=0 and len(self.direccion.get()) !=0:
@@ -806,21 +806,21 @@ class Tienda():
         self.apellidos.delete(0, END)
         self.telefono.delete(0, END)
         self.email.delete(0, END)
-        self.direccion.delete(0, END) 
+        self.direccion.delete(0, END)
 
     def Validar_busqueda_cliente(self):
         if len(self.buscar_dni.get()) !=0:
             return True
         else:
              self.tree_cliente.delete(*self.tree_cliente.get_children())
-             messagebox.showerror("ERROR", "Complete todos los campos para la busqueda") 
+             messagebox.showerror("ERROR", "Complete todos los campos para la busqueda")
 
     "--------------- VENTAS--------------------"
     def Agregar_producto_venta(self):
         codigo_busqueda=self.codigo_producto_venta.get()
         cantidad=self.cantidad_producto_venta.get()
         if(self.Validar_busqueda_producto_venta()):
-            query=("SELECT Codigo,Nombre,Descripcion,Precio FROM Productos WHERE Codigo LIKE ?") 
+            query=("SELECT Codigo,Nombre,Descripcion,Precio FROM Productos WHERE Codigo LIKE ?")
             parameters=(codigo_busqueda)
             db_rows=self.Ejecutar_consulta(query,(parameters,))
             rows=db_rows.fetchall()
@@ -835,7 +835,7 @@ class Tienda():
         fecha=datetime.now()
         formato_fecha=fecha.strftime('%d/%m/%Y  %H:%M:%S')
         print(self.monto_total)
-        
+
         query='INSERT INTO Ventas VALUES(NULL, ?, ?, ?,?)'
         parameters = (self.dni_venta.get(),formato_fecha,self.combo_medio_pago.get(),self.monto_total)
         print('REGISTRADO')
@@ -846,7 +846,7 @@ class Tienda():
             self.Limpiar_venta_finalizada()
         else:
             messagebox.showerror('ERROR',f'Error al eliminar el producto')
-    
+
     def Buscar_venta(self):
         if(self.Validar_busqueda_ventas()):
             #Obtener todos los elementos con get_children(), que retorna una tupla de ID.
@@ -854,7 +854,7 @@ class Tienda():
             for element in records:
                 self.tree_buscar_ventas.delete(element)
             if (self.combo_buscar_venta.get()=='DNI'):
-                query=("SELECT Fecha,DNI,Clientes.Nombres,Clientes.Apellidos , Medio_pago, Total FROM Ventas INNER JOIN Clientes on Ventas.dni_cliente=Clientes.DNI WHERE DNI LIKE ? ") 
+                query=("SELECT Fecha,DNI,Clientes.Nombres,Clientes.Apellidos , Medio_pago, Total FROM Ventas INNER JOIN Clientes on Ventas.dni_cliente=Clientes.DNI WHERE DNI LIKE ? ")
                 parameters=(self.dni_fecha.get()+"%")
                 db_rows=self.Ejecutar_consulta(query,(parameters,))
                 for row in db_rows:
@@ -876,20 +876,20 @@ class Tienda():
             return True
         else:
                 #self.tree_cliente.delete(*self.tree_cliente.get_children())
-                messagebox.showerror("ERROR", "Complete todos los campos") 
+                messagebox.showerror("ERROR", "Complete todos los campos")
 
     def Suma_total_venta(self):
         self.monto_total = 0.00
-        for item in self.tree_nueva_venta.get_children():    
+        for item in self.tree_nueva_venta.get_children():
             celda = float(self.tree_nueva_venta.set(item, "columna5"))
             self.monto_total += celda
         self.venta_total.config(text=self.monto_total)
-    
+
     def Eliminar_producto_venta(self):
         try:
             item=self.tree_nueva_venta.selection()
         except IndexError as e:
-            messagebox.showerror("ERROR","Porfavor selecciona un elemento") 
+            messagebox.showerror("ERROR","Porfavor selecciona un elemento")
             return
         respuesta=messagebox.askquestion("ADVERTENCIA",f"¿Seguro que desea eliminar el producto?")
         if respuesta == 'yes':
@@ -914,7 +914,7 @@ class Tienda():
             return True
         else:
              self.tree_buscar_ventas.delete(*self.tree_buscar_ventas.get_children())
-             messagebox.showerror("ERROR", "Complete todos los campos para la busqueda") 
+             messagebox.showerror("ERROR", "Complete todos los campos para la busqueda")
 
 if __name__ == '__main__':
     ventana_producto=Tk()

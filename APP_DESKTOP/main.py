@@ -5,27 +5,27 @@ Mostrar messagebox
 """
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox 
+from tkinter import messagebox
 #Python image Library
 from PIL import ImageTk, Image
 import sqlite3
-from Buscador import Producto
+from buscador import Producto
 
 class Login:
     db_name='database_proyecto.db'
-    
+
     def __init__(self,ventana_login):
-        self.window=ventana_login  
+        self.window=ventana_login
         self.window.title("INGRESAR AL SISTEMA")
-        self.window.geometry("330x370")
+        self.window.geometry("380x370")
         self.window.resizable(0,0)
         self.window.config(bd=10)
-        
+
         "--------------- Titulo --------------------"
         titulo= Label(ventana_login, text="INICIAR SESION",fg="black",font=("Comic Sans", 13,"bold"),pady=10).pack()
 
         "--------------- Loginlogo --------------------"
-        imagen_login=Image.open("D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/login.png")
+        imagen_login=Image.open("img/user-login.png")
         nueva_imagen=imagen_login.resize((40,40))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(ventana_login, image= render)
@@ -47,7 +47,7 @@ class Login:
         label_nombres=Label(marco,text="Contraseña: ",font=("Comic Sans", 10,"bold")).grid(row=1,column=0,sticky='s',padx=10,pady=10)
         self.password_login=Entry(marco,width=25,show="*")
         self.password_login.grid(row=1, column=1, padx=10, pady=10)
-        
+
         "--------------- Frame botones --------------------"
         frame_botones=Frame(ventana_login)
         frame_botones.pack()
@@ -57,7 +57,7 @@ class Login:
         boton_registrar=Button(frame_botones,text="REGISTRAR",command=self.Ventana_registrar_usuario,height=2,width=12,bg="blue",fg="white",font=("Comic Sans", 10,"bold")).grid(row=0, column=2, padx=10, pady=15)
         label_=Label(frame_botones,text="⬇ ¿Olvido su contraseña? ⬇",font=("Comic Sans", 10,"bold")).grid(row=1,column=1,columnspan=2,sticky='s')
         boton_olvido=Button(frame_botones,text="RECUPERAR CONTRASEÑA",command=self.Ventana_recuperar_password ,height=2,width=24,bg="gray",fg="white",font=("Comic Sans", 10,"bold")).grid(row=2, column=1, columnspan=2, padx=10, pady=8)
-    
+
     def Validar_login(self, dni, password):
         with sqlite3.connect(self.db_name) as conexion:
             cursor=conexion.cursor()
@@ -66,14 +66,14 @@ class Login:
             validacion= cursor.fetchall() # obtener respuesta como lista
             cursor.close()
             return validacion
-        
+
     def Validar_formulario_completo(self):
         if len(self.dni_login.get()) !=0 and len(self.password_login.get()) !=0:
             return True
         else:
              messagebox.showerror("ERROR DE INGRESO", "Ingrese su DNI y contraseña!!!")
-        self.Limpiar_login()    
-    
+        self.Limpiar_login()
+
     def Limpiar_login(self):
             self.dni_login.delete(0, END)
             self.password_login.delete(0, END)
@@ -88,7 +88,7 @@ class Login:
                     messagebox.showinfo("BIENVENIDO", "Datos ingresados correctamente")
                     Producto.__init__(self,ventana_producto=ventana_login)
                 else:
-                    messagebox.showerror("ERROR DE INGRESO", "DNI o contraseña incorrecto") 
+                    messagebox.showerror("ERROR DE INGRESO", "DNI o contraseña incorrecto")
                 self.Limpiar_login()
         except:
             messagebox.showerror("ERROR", "Ha ocurrido un error, reinicie el programa")
@@ -97,15 +97,15 @@ class Login:
     def Ventana_registrar_usuario(self):
         self.Ventana_registrar=Toplevel()
         self.Ventana_registrar.title("FORMULARIO DE REGISTRO")
-        self.Ventana_registrar.geometry("390x630")
+        self.Ventana_registrar.geometry("450x670")
         self.Ventana_registrar.resizable(0,0)
         self.Ventana_registrar.config(bd=10)
-        
+
         "--------------- Titulo --------------------"
         titulo= Label(self.Ventana_registrar, text="REGISTRO DE USUARIO",fg="black",font=("Comic Sans", 13,"bold"),pady=5).pack()
 
         "--------------- Nuevo usuario logo --------------------"
-        imagen_registro=Image.open("D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/nuevo_usuario.png")
+        imagen_registro=Image.open("img/new-user.jpg")
         nueva_imagen=imagen_registro.resize((40,40))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.Ventana_registrar, image= render)
@@ -152,7 +152,7 @@ class Login:
         label_password=Label(marco,text="Repetir contraseña: ",font=("Comic Sans", 10,"bold")).grid(row=7,column=0,sticky='s',padx=10,pady=8)
         self.repetir_password=Entry(marco,width=25,show="*")
         self.repetir_password.grid(row=7, column=1, padx=10, pady=8)
-        
+
         "--------------- Marco pregunta --------------------"
         marco_pregunta = LabelFrame(self.Ventana_registrar, text="Si olvidas tu contraseña",font=("Comic Sans", 10,"bold"),pady=10)
         marco_pregunta.config(bd=2,pady=5)
@@ -162,11 +162,11 @@ class Login:
         self.combo_pregunta=ttk.Combobox(marco_pregunta,values=["¿Nombre de tu primera mascota?","¿Lugar dónde fuiste al colegio?","¿En que ciudad naciste?","¿Cómo se llama tu equipo favorito?"], width=30,state="readonly")
         self.combo_pregunta.current(0)
         self.combo_pregunta.grid(row=0,column=1,padx=10,pady=8)
-  
+
         label_respuesta=Label(marco_pregunta,text="Respuesta: ",font=("Comic Sans", 10,"bold")).grid(row=1,column=0,sticky='s',padx=10,pady=8)
         self.respuesta=Entry(marco_pregunta,width=33)
-        self.respuesta.grid(row=1, column=1, padx=10, pady=8)        
-        
+        self.respuesta.grid(row=1, column=1, padx=10, pady=8)
+
         label_nota=Label(marco_pregunta,text="*Esta respuesta te permitira recuperar tu contraseña.",font=("Comic Sans", 9,"bold"),foreground="blue").grid(row=2,column=0,columnspan=2,sticky='s',padx=10)
 
         "--------------- Frame botones --------------------"
@@ -185,8 +185,8 @@ class Login:
             cursor=conexion.cursor()
             result=cursor.execute(query,parameters)
             conexion.commit()
-        return result 
-    
+        return result
+
     def Limpiar_formulario_registro(self):
             self.dni.delete(0, END)
             self.nombres.delete(0, END)
@@ -198,7 +198,7 @@ class Login:
             self.repetir_password.delete(0, END)
             self.combo_pregunta.delete(0, END)
             self.respuesta.delete(0, END)
-        
+
     def Validar_formulario_completo_registro(self):
         if len(self.dni.get()) !=0 and len(self.nombres.get()) !=0 and len(self.apellidos.get()) !=0 and len(self.combo_sexo.get()) !=0 and len(self.edad.get()) !=0 and len(self.password.get()) !=0 and len(self.repetir_password.get()) !=0 and len(self.correo.get()) !=0 and len(self.respuesta.get()) !=0:
             return True
@@ -210,7 +210,7 @@ class Login:
             return True
         else:
             messagebox.showerror("ERROR EN REGISTRO", "Contraseñas no coinciden")
- 
+
     def Buscar_dni(self, dni):
         with sqlite3.connect(self.db_name) as conexion:
             cursor=conexion.cursor()
@@ -219,7 +219,7 @@ class Login:
             dnix= cursor.fetchall() # obtener respuesta como lista
             cursor.close()
             return dnix
-    
+
     def Validar_dni(self):
         dni= self.dni.get()
         dato = self.Buscar_dni(dni)
@@ -237,10 +237,10 @@ class Login:
             print('USUARIO CREADO')
             self.Limpiar_formulario_registro()
 
-    "--------------------------------------------- RECUPERAR CONTRASEÑA --------------------------------------------------"  
+    "--------------------------------------------- RECUPERAR CONTRASEÑA --------------------------------------------------"
     def Ventana_recuperar_password(self):
         self.Ventana_recuperar = Toplevel()
-        self.Ventana_recuperar.geometry("410x420")
+        self.Ventana_recuperar.geometry("480x430")
         self.Ventana_recuperar.title('RECUPERAR CONTRASEÑA')
         self.Ventana_recuperar.resizable(0,0)
         self.Ventana_recuperar.config(bd=10)
@@ -249,7 +249,7 @@ class Login:
         titulo= Label(self.Ventana_recuperar, text="RECUPERAR CONTRASEÑA",fg="black",font=("Comic Sans", 13,"bold"),pady=8).pack()
 
         "--------------- Recuperar password logo --------------------"
-        imagen_password=Image.open("D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/recuperar_contraseña.png")
+        imagen_password=Image.open("img/reset-password.jpg")
         nueva_imagen=imagen_password.resize((60,60))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.Ventana_recuperar, image= render)
@@ -266,7 +266,7 @@ class Login:
         self.dni=Entry(marco,width=25)
         self.dni.focus()
         self.dni.grid(row=0, column=1, padx=5, pady=8)
-        
+
         label_nota=Label(marco,text="*Seleccione una pregunta y brinde la respuesta correcta.",font=("Comic Sans", 9,"bold"),foreground="blue").grid(row=1,column=0,columnspan=2,sticky='s',padx=8)
 
         label_pregunta=Label(marco,text="Pregunta: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=0,sticky='s',padx=5,pady=8)
@@ -300,20 +300,20 @@ class Login:
         self.dni.delete(0, END)
         self.respuesta.delete(0, END)
         self.nuevo_password.delete(0, END)
-        self.repetir_password.delete(0, END)     
-        
+        self.repetir_password.delete(0, END)
+
     def Validar_formulario_completo_recuperar(self):
         if len(self.dni.get()) !=0 and len(self.nuevo_password.get()) !=0 and len(self.repetir_password.get()) !=0 and len(self.respuesta.get()) !=0:
             return True
         else:
              messagebox.showerror("ERROR", "Complete todos los campos del formulario")
-             
+
     def Validar_contraseña_recuperar(self):
         if(str(self.nuevo_password.get()) == str(self.repetir_password.get())):
             return True
         else:
             messagebox.showerror("ERROR DE RECUPERACION", "Contraseñas no coinciden")
- 
+
     def Buscar_usuario(self, dni, respuesta):
         with sqlite3.connect(self.db_name) as conexion:
             cursor=conexion.cursor()
@@ -342,9 +342,8 @@ class Login:
             self.Limpiar_formulario_recuperar()
             self.Ventana_recuperar.destroy()
 
-#verificar si el modulo ha sido ejecutado correctamente  
+#verificar si el modulo ha sido ejecutado correctamente
 if __name__ == '__main__':
     ventana_login=Tk()
     application=Login(ventana_login)
     ventana_login.mainloop()
-

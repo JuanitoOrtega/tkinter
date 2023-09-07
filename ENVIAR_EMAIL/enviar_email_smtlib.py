@@ -1,7 +1,7 @@
 """
 SMTP
 ¿Qué es y para qué sirve SMTP?
-SMTP, Simple Mail Transfer Protocol por sus siglas en inglés, es un protocolo o conjunto de reglas 
+SMTP, Simple Mail Transfer Protocol por sus siglas en inglés, es un protocolo o conjunto de reglas
 de comunicación que utilizan los servidores de correo electrónico para enviar y recibir e-mails.
 """
 from email.message import EmailMessage #Construir la estructura del email
@@ -14,14 +14,14 @@ from PIL import ImageTk, Image
 "------------INTERFAZ TKINTER------------"
 ventana =Tk()
 ventana.title("ALICACION DE MENSAJERIA")
-ventana.geometry("335x385")
+ventana.geometry("415x385")
 ventana.resizable(0,0)
 ventana.config(bd=10)
 
 Label(ventana, text="ENVIAR CORREO VIA GMAIL",fg="black",font=("Arial", 15,"bold"),padx=5,pady=5).grid(row=0,column=0,columnspan=2)
 
 #Imagen GMAIL
-imagen_gmail=Image.open("D:/EIGHTA/PYTHON-TKINTER/ENVIAR_EMAIL/logo_gmail.png")
+imagen_gmail=Image.open("logo_gmail.png")
 nueva_imagen=imagen_gmail.resize((125,84))
 render=ImageTk.PhotoImage(nueva_imagen)
 label_imagen= Label(ventana, image= render)

@@ -5,7 +5,7 @@ BUSCADOR-PRODUCTOS
 """
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox 
+from tkinter import messagebox
 #Python image Library
 from PIL import ImageTk, Image
 import sqlite3
@@ -14,12 +14,12 @@ import sqlite3
 class Producto():
     db_name='database_proyecto.db'
     def __init__(self, ventana_producto):
-        menubar=Menu(ventana_producto)   
+        menubar=Menu(ventana_producto)
         ventana_producto.title("APLICACION")
         ventana_producto.geometry("769x660")
         ventana_producto.resizable(0,0)
         ventana_producto.config(bd=10,menu=menubar)
-        
+
         "---------------------Menu---------------------------"
         Productos=Menu(menubar,tearoff=0)
         Ventas=Menu(menubar,tearoff=0)
@@ -30,14 +30,14 @@ class Producto():
         menubar.add_cascade(label="Reportes",menu=Reportes)
         menubar.add_cascade(label="Ayuda",menu=Informacion)
         #Iconos
-        self.img_registrar=PhotoImage(file="D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/registrar.png")
-        self.img_buscar=PhotoImage(file="D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/buscar.png")
-        self.img_informacion=PhotoImage(file="D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/informacion.png")
+        self.img_registrar=PhotoImage(file="img/new-product.png")
+        self.img_buscar=PhotoImage(file="img/search.png")
+        self.img_informacion=PhotoImage(file="img/info.png")
         #Acciones de menu
         self.boton_registrar=Productos.add_command(label="Registrar",command= self.widgets_crud,image=self.img_registrar,compound=LEFT)
         self.boton_buscar=Productos.add_command(label="Buscar",command=self.widgets_buscador,image=self.img_buscar,compound=LEFT)
         self.boton_informacion=Informacion.add_command(label="Informacion del sistema",command=self.widgets_informacion,image=self.img_informacion,compound=LEFT)
-        
+
         "---------------------Widgets---------------------------"
         #widgets crud
         self.Label_titulo_crud=LabelFrame(ventana_producto)
@@ -61,13 +61,13 @@ class Producto():
         "--------------- Titulo --------------------"
         self.titulo_crud= Label(self.Label_titulo_crud, text="REGISTRO DE PRODUCTOS ELECTRONICOS",fg="black",font=("Comic Sans", 17,"bold"))
         self.titulo_crud.grid(row=0,column=0)
-        
+
         "--------------- Logos productos --------------------"
         self.frame_logo_productos.config(bd=0)
         self.frame_logo_productos.grid(row=1,column=0,padx=5,pady=5)
 
         #Logo arduino
-        imagen_arduino=Image.open("D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/arduino-logo.png")
+        imagen_arduino=Image.open("img/arduino_logo.png")
         nueva_imagen=imagen_arduino.resize((60,60))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.frame_logo_productos, image= render)
@@ -75,21 +75,21 @@ class Producto():
         label_imagen.grid(row=0, column=0,padx=15,pady=5)
 
         #Logo nodemcu
-        imagen_nodemcu=Image.open("D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/nodemcu-logo.png")
+        imagen_nodemcu=Image.open("img/nodemcu-logo.png")
         nueva_imagen=imagen_nodemcu.resize((60,60))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.frame_logo_productos, image= render)
         label_imagen.image=render
         label_imagen.grid(row=0, column=1,padx=15,pady=5)
-        
+
         #Logo raspberry
-        imagen_raspberry=Image.open("D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/raspberry-logo.png")
+        imagen_raspberry=Image.open("img/raspberry-pi.png")
         nueva_imagen=imagen_raspberry.resize((60,60))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.frame_logo_productos, image= render)
         label_imagen.image=render
         label_imagen.grid(row=0, column=2,padx=15,pady=5)
-        
+
         "--------------- Frame marco --------------------"
         self.frame_registro.config(bd=2)
         self.frame_registro.grid(row=2,column=0,padx=5,pady=5)
@@ -99,11 +99,11 @@ class Producto():
         self.codigo=Entry(self.frame_registro,width=25)
         self.codigo.focus()
         self.codigo.grid(row=0, column=1, padx=5, pady=8)
-        
+
         label_nombre=Label(self.frame_registro,text="Nombre del producto: ",font=("Comic Sans", 10,"bold")).grid(row=1,column=0,sticky='s',padx=5,pady=8)
         self.nombre=Entry(self.frame_registro,width=25)
         self.nombre.grid(row=1, column=1, padx=5, pady=8)
-        
+
         label_categoria=Label(self.frame_registro,text="Categoria: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=0,sticky='s',padx=5,pady=9)
         self.combo_categoria=ttk.Combobox(self.frame_registro,values=["Microcontrolador","Microordenador","Sensores","Accesorios"], width=22,state="readonly")
         self.combo_categoria.current(0)
@@ -120,7 +120,7 @@ class Producto():
         label_descripcion=Label(self.frame_registro,text="Descripcion: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=2,sticky='s',padx=10,pady=8)
         self.descripcion=Entry(self.frame_registro,width=25)
         self.descripcion.grid(row=2, column=3, padx=10, pady=8)
-        
+
         "--------------- Frame botones --------------------"
         self.frame_botones_registro.config(bd=0)
         self.frame_botones_registro.grid(row=3,column=0,padx=5,pady=5)
@@ -129,7 +129,7 @@ class Producto():
         boton_registrar=Button(self.frame_botones_registro,text="REGISTRAR",command=self.Agregar_producto,height=2,width=12,bg="green",fg="white",font=("Comic Sans", 10,"bold")).grid(row=0, column=1, padx=10, pady=15)
         boton_editar=Button(self.frame_botones_registro,text="EDITAR",command=self.Editar_producto ,height=2,width=12,bg="gray",fg="white",font=("Comic Sans", 10,"bold")).grid(row=0, column=2, padx=10, pady=15)
         boton_eliminar=Button(self.frame_botones_registro,text="ELIMINAR",command=self.Eliminar_producto,height=2,width=12,bg="red",fg="white",font=("Comic Sans", 10,"bold")).grid(row=0, column=3, padx=10, pady=15)
-        
+
         "--------------- Tabla --------------------"
         self.frame_tabla_crud.config(bd=2)
         self.frame_tabla_crud.grid(row=4,column=0,padx=5,pady=5)
@@ -137,25 +137,25 @@ class Producto():
         self.tree=ttk.Treeview(self.frame_tabla_crud,height=11, columns=("columna1","columna2","columna3","columna4","columna5"))
         self.tree.heading("#0",text='Codigo', anchor=CENTER)
         self.tree.column("#0", width=90, minwidth=75, stretch=NO)
-        
+
         self.tree.heading("columna1",text='Nombre', anchor=CENTER)
         self.tree.column("columna1", width=150, minwidth=75, stretch=NO)
-        
+
         self.tree.heading("columna2",text='Categoria', anchor=CENTER)
         self.tree.column("columna2", width=150, minwidth=75, stretch=NO)
-                
+
         self.tree.heading("columna3",text='Cantidad', anchor=CENTER)
         self.tree.column("columna3", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree.heading("columna4",text='Precio', anchor=CENTER)
         self.tree.column("columna4", width=70, minwidth=60, stretch=NO)
-        
+
         self.tree.heading("columna5",text='Descripcion', anchor=CENTER)
-        
+
         self.tree.grid(row=0,column=0,sticky=E)
-        
+
         self.Obtener_productos()
-        
+
         #REMOVER OTROS WIDGETS
         self.widgets_buscador_remove()
         self.Label_informacion.grid_remove()
@@ -167,11 +167,11 @@ class Producto():
         "--------------- Titulo --------------------"
         self.titulo_buscador= Label(self.Label_titulo_buscador, text="BUSCADOR DE PRODUCTOS ELECTRONICOS",fg="black",font=("Comic Sans", 17,"bold"))
         self.titulo_buscador.grid(row=0,column=0)
-        
+
         "--------------- Frame buscar --------------------"
         self.frame_buscar_producto.config(bd=2)
         self.frame_buscar_producto.grid(row=2,column=0,padx=5,pady=5)
-        
+
         "--------------- Formulario Buscar--------------------"
         self.label_buscar=Label(self.frame_buscar_producto,text="Buscar Por: ",font=("Comic Sans", 10,"bold")).grid(row=0,column=0,sticky='s',padx=5,pady=5)
         self.combo_buscar=ttk.Combobox(self.frame_buscar_producto,values=["Codigo","Nombre"], width=22,state="readonly")
@@ -195,7 +195,7 @@ class Producto():
         #REMOVER OTROS WIDGETS
         self.widgets_crud_remove()
         self.Label_informacion.grid_remove()
-        
+
     def widgets_crud_remove(self):
         self.Label_titulo_crud.grid_remove()
         self.frame_registro.grid_remove()
@@ -214,8 +214,8 @@ class Producto():
         self.Label_titulo.grid(row=0,column=0)
 
         "--------------- Logos imagenes--------------------"
-        #Logo 
-        imagen_arduino=Image.open("D:/EIGHTA/PYTHON-TKINTER/SISTEMA DESKTOP/Imagenes/app_logo_2.png")
+        #Logo
+        imagen_arduino=Image.open("img/arduino_logo.png")
         nueva_imagen=imagen_arduino.resize((170,170))
         render=ImageTk.PhotoImage(nueva_imagen)
         label_imagen= Label(self.Label_informacion, image= render)
@@ -242,7 +242,7 @@ class Producto():
         self.widgets_buscador_remove()
         self.widgets_crud_remove()
 
-    "--------------- CRUD --------------------"               
+    "--------------- CRUD --------------------"
     def Obtener_productos(self):
         records=self.tree.get_children()
         for element in records:
@@ -251,7 +251,7 @@ class Producto():
         db_rows=self.Ejecutar_consulta(query)
         for row in db_rows:
             self.tree.insert("",0, text=row[1],values=(row[2],row[3],row[4],row[5],row[6]))
-            
+
     def Agregar_producto(self):
         if self.Validar_formulario_completo() and self.Validar_registrar():
             query='INSERT INTO Productos VALUES(NULL, ?, ?, ?, ?, ?, ?)'
@@ -261,12 +261,12 @@ class Producto():
             print('REGISTRADO')
             self.Limpiar_formulario()
         self.Obtener_productos()
-    
+
     def Eliminar_producto(self):
         try:
             self.tree.item(self.tree.selection())['text'][0]
         except IndexError as e:
-            messagebox.showerror("ERROR","Porfavor selecciona un elemento") 
+            messagebox.showerror("ERROR","Porfavor selecciona un elemento")
             return
         dato=self.tree.item(self.tree.selection())['text']
         nombre=self.tree.item(self.tree.selection())['values'][0]
@@ -278,12 +278,12 @@ class Producto():
             messagebox.showinfo('EXITO',f'Producto eliminado: {nombre}')
         else:
             messagebox.showerror('ERROR',f'Error al eliminar el producto: {nombre}')
-     
+
     def Editar_producto(self):
         try:
             self.tree.item(self.tree.selection())['text'][0]
         except IndexError as e:
-            messagebox.showerror("ERROR","Porfavor selecciona un elemento") 
+            messagebox.showerror("ERROR","Porfavor selecciona un elemento")
             return
         codigo=self.tree.item(self.tree.selection())['text']
         nombre=self.tree.item(self.tree.selection())['values'][0]
@@ -291,21 +291,21 @@ class Producto():
         cantidad=self.tree.item(self.tree.selection())['values'][2]
         precio=self.tree.item(self.tree.selection())['values'][3]
         descripcion=self.tree.item(self.tree.selection())['values'][4]
-        
+
         self.Ventana_editar = Toplevel()
         self.Ventana_editar.title('EDITAR PRODUCTO')
         self.Ventana_editar.resizable(0,0)
-        
-        
+
+
         #Valores ventana editar
         label_codigo=Label(self.Ventana_editar,text="Codigo del producto: ",font=("Comic Sans", 10,"bold")).grid(row=0,column=0,sticky='s',padx=5,pady=8)
         nuevo_codigo=Entry(self.Ventana_editar,textvariable=StringVar(self.Ventana_editar,value=codigo),width=25)
         nuevo_codigo.grid(row=0, column=1, padx=5, pady=8)
-        
+
         label_nombre=Label(self.Ventana_editar,text="Nombre del producto: ",font=("Comic Sans", 10,"bold")).grid(row=1,column=0,sticky='s',padx=5,pady=8)
         nuevo_nombre=Entry(self.Ventana_editar,textvariable=StringVar(self.Ventana_editar,value=nombre),width=25)
         nuevo_nombre.grid(row=1, column=1, padx=5, pady=8)
-    
+
         label_categoria=Label(self.Ventana_editar,text="Categoria: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=0,sticky='s',padx=5,pady=9)
         nuevo_combo_categoria=ttk.Combobox(self.Ventana_editar,values=["Microcontrolador","Microordenador","Sensores","Accesorios"], width=22,state="readonly")
         nuevo_combo_categoria.set(categoria)
@@ -318,16 +318,16 @@ class Producto():
         label_precio=Label(self.Ventana_editar,text="Precio (S/.): ",font=("Comic Sans", 10,"bold")).grid(row=1,column=2,sticky='s',padx=5,pady=8)
         nuevo_precio=Entry(self.Ventana_editar,textvariable=StringVar(self.Ventana_editar,value=precio),width=25)
         nuevo_precio.grid(row=1, column=3, padx=5, pady=8)
-        
+
         label_descripcion=Label(self.Ventana_editar,text="Descripcion: ",font=("Comic Sans", 10,"bold")).grid(row=2,column=2,sticky='s',padx=10,pady=8)
         nueva_descripcion=Entry(self.Ventana_editar,textvariable=StringVar(self.Ventana_editar,value=descripcion),width=25)
         nueva_descripcion.grid(row=2, column=3, padx=10, pady=8)
 
         boton_actualizar=Button(self.Ventana_editar,text="ACTUALIZAR",command= lambda: self.Actualizar(nuevo_codigo.get(),nuevo_nombre.get(),nuevo_combo_categoria.get(),nueva_cantidad.get(),nuevo_precio.get(),nueva_descripcion.get(),codigo,nombre),height=2,width=20,bg="black",fg="white",font=("Comic Sans", 10,"bold"))
         boton_actualizar.grid(row=3, column=1,columnspan=2, padx=10, pady=15)
-        
-        self.Ventana_editar.mainloop()      
-        
+
+        self.Ventana_editar.mainloop()
+
     def Actualizar(self,nuevo_codigo,nuevo_nombre,nuevo_combo_categoria,nueva_cantidad,nuevo_precio,nueva_descripcion,codigo,nombre):
         query='UPDATE Productos SET Codigo = ?, Nombre = ?, Categoria = ?, Cantidad =?, Precio=?, Descripcion =? WHERE Codigo = ? AND Nombre =?'
         parameters=(nuevo_codigo,nuevo_nombre,nuevo_combo_categoria,nueva_cantidad,nuevo_precio,nueva_descripcion,codigo,nombre)
@@ -341,9 +341,9 @@ class Producto():
         records=self.tree.get_children()
         for element in records:
             self.tree.delete(element)
-        
+
         if (self.combo_buscar.get()=='Codigo'):
-            query=("SELECT * FROM Productos WHERE Codigo LIKE ? ") 
+            query=("SELECT * FROM Productos WHERE Codigo LIKE ? ")
             parameters=(self.codigo_nombre.get()+"%")
             db_rows=self.Ejecutar_consulta(query,(parameters,))
             for row in db_rows:
@@ -365,14 +365,14 @@ class Producto():
             cursor=conexion.cursor()
             result=cursor.execute(query,parameters)
             conexion.commit()
-        return result   
-          
+        return result
+
     def Validar_formulario_completo(self):
         if len(self.codigo.get()) !=0 and len(self.nombre.get()) !=0 and len(self.combo_categoria.get()) !=0 and len(self.cantidad.get()) !=0 and len(self.precio.get()) !=0 and len(self.descripcion.get()) !=0:
             return True
         else:
-             messagebox.showerror("ERROR", "Complete todos los campos del formulario") 
-    
+             messagebox.showerror("ERROR", "Complete todos los campos del formulario")
+
     def Limpiar_formulario(self):
         self.codigo.delete(0, END)
         self.nombre.delete(0, END)
@@ -381,8 +381,8 @@ class Producto():
         self.descripcion.delete(0, END)
 
     def Validar_registrar(self):
-        parameters= self.codigo.get()
-        query="SELECT * FROM Productos WHERE Codigo = ?"
+        parameters = self.codigo.get()
+        query = "SELECT * FROM Productos WHERE Codigo = ?"
         dato = self.Ejecutar_consulta(query,(parameters,))
         if (dato.fetchall() == []):
             return True
@@ -390,7 +390,7 @@ class Producto():
             messagebox.showerror("ERROR EN REGISTRO", "Codigo registrado anteriormente")
 
 if __name__ == '__main__':
-    ventana_producto=Tk()
-    label_crud=Label(ventana_producto)
-    application=Producto(ventana_producto)
+    ventana_producto = Tk()
+    label_crud = Label(ventana_producto)
+    application = Producto(ventana_producto)
     ventana_producto.mainloop()
